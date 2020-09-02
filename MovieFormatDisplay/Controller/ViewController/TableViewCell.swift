@@ -28,7 +28,7 @@ class TableViewCell: UITableViewCell {
         return UINib(nibName: "TableViewCell", bundle: nil)
     }
     
-    func setcell(item:Item){
+    func setcell(item:MovieItem){
         self.nameLabel.text = item.name as String
         self.dateLabel.text = item.date as String
     }

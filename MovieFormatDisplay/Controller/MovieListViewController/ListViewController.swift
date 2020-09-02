@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import RealmSwift
 
-class ListViewController: UIViewController{
+class ListViewController: UIViewController {
     
-    var list:[Item]{
+    var movieItems: Results<RegisteredMovie>!
+    
+    var list:[RegisteredMovie]{
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
@@ -33,17 +36,32 @@ class ListViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        self.setupTable()
         
+        let realm = try! Realm()
+        movieItems = realm.objects(RegisteredMovie.self)
+        
+        table.reloadData()
+    }
+    
+//メソッドsegmentSelcted同等の処理なら不要
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        table.reloadData()
+//    }
+}
+
+extension ListViewController {
+    
+    private func setupTable() {
         table.register(ListTableViewCell.nib(), forCellReuseIdentifier: ListTableViewCell.identifier)
-
-
         table.delegate = self
         table.dataSource = self
-        
     }
 }
 
-extension ListViewController:UITableViewDelegate,UITableViewDataSource{
+extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         list.count
@@ -51,9 +69,12 @@ extension ListViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as! ListTableViewCell
-        cell.setcell(item: list[indexPath.row])
+        cell.setcell(object: list[indexPath.row])
         return cell
     }
+}
+
+extension ListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -61,16 +82,17 @@ extension ListViewController:UITableViewDelegate,UITableViewDataSource{
 }
 
 //Singleton
-class ListAddedData{
-    static let shared = ListAddedData()
-    
-    private(set) var allList:[Item] = []
-    private(set) var selectedList:[Item] = []
-    
-    func add(_ item:Item, isSelected: Bool = false){
-        allList.append(item)
-        if isSelected{
-            selectedList.append(item)
-        }
-    }
-}
+//class ListAddedData{
+//    static let shared = ListAddedData()
+//    private init(){}
+//
+//    private(set) var allList:[MovieItem] = []
+//    private(set) var selectedList:[MovieItem] = []
+//
+//    func add(_ item:MovieItem, isSelected: Bool = false){
+//        allList.append(item)
+//        if isSelected{
+//            selectedList.append(item)
+//        }
+//    }
+//}

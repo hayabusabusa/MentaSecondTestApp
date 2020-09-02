@@ -4,11 +4,10 @@
 //
 //  Created by Yuta Toba on 2020/08/03.
 //  Copyright © 2020 Yuta Toba. All rights reserved.
-//
 
 import Foundation
 
-class Item : NSObject,Codable{
+struct MovieItem : Decodable {
     
     var name:String
     var date:String
@@ -17,6 +16,10 @@ class Item : NSObject,Codable{
         self.name = name as String
         self.date = date as String
     }
+    
+//    override required init() {
+//        fatalError("init() has not been implemented")
+//    }
     
 //    func encode(with coder: NSCoder) {
 //        coder.encode(self.name,forKey: "name")

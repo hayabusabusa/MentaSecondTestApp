@@ -28,9 +28,9 @@ class ListTableViewCell: UITableViewCell {
         return UINib(nibName: "ListTableViewCell", bundle: nil)
     }
     
-    func setcell(item:Item){
-        self.listNameLabel.text = item.name
-        self.listDateLabel.text = item.date
+    func setcell(object:RegisteredMovie) {
+        self.listNameLabel.text = object.name
+        self.listDateLabel.text = object.date
     }
     
 }

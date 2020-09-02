@@ -12,25 +12,30 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var table:UITableView!
-    var items:[Item] = [Item]()
+    private var items:[MovieItem] = [MovieItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        table.register(TableViewCell.nib(), forCellReuseIdentifier: TableViewCell.identifier)
-
-        table.delegate = self
-        table.dataSource = self
-        
+        self.setupTable()
         self.setupItems()
-    }
-    
-    func setupItems(){
-        items = [Item(name:"a",date:"1"),Item(name:"b",date:"2"),Item(name:"c",date:"3"),Item(name:"d",date:"4"),Item(name:"e",date:"5"),]
     }
 }
 
-extension ViewController: UITableViewDelegate,UITableViewDataSource{
+extension ViewController {
+    
+    private func setupTable() {
+        table.register(TableViewCell.nib(), forCellReuseIdentifier: TableViewCell.identifier)
+        table.delegate = self
+        table.dataSource = self
+    }
+    
+    private func setupItems() {
+        items = [MovieItem(name:"a",date:"1"),MovieItem(name:"b",date:"2"),MovieItem(name:"c",date:"3"),MovieItem(name:"d",date:"4"),MovieItem(name:"e",date:"5")]
+    }
+}
+
+extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
@@ -42,18 +47,21 @@ extension ViewController: UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "registerControl"{
+//            let nextVC: RegisterViewController = segue.destination as! RegisterViewController
+//            if let selecteditems = sender as? MovieItem{
+//                nextVC.item = selecteditems
+//            }
+//        }
+//    }
+}
+
+extension ViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "registerControl", sender: items[indexPath.row])
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "registerControl"{
-            let nextVC: RegisterViewController = segue.destination as! RegisterViewController
-            if let selecteditems = sender as? Item{
-                nextVC.item = selecteditems
-            }
-        }
     }
 }
 
