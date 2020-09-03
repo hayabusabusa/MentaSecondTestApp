@@ -70,10 +70,7 @@ extension ListViewController {
             let storedRegisteredMovies = Array(realm.objects(RegisteredMovie.self))
             registeredMovies = storedRegisteredMovies
             
-            // セグメントが 1 の時はデータを更新しない.
-            if segmentedControl.selectedSegmentIndex == 0 {
-                table.reloadData()
-            }
+            table.reloadData()
         } catch {
             print(error)
         }
