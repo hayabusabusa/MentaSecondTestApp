@@ -5,20 +5,27 @@
 //  Created by Yuta Toba on 2020/07/31.
 //  Copyright © 2020 Yuta Toba. All rights reserved.
 
-//Array型をxibFileでStringにする方法
-//配列に複数の情報を入れる方法
 import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var table:UITableView!
-    private var items:[MovieItem] = [MovieItem]()
+    @IBOutlet weak var table: UITableView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.setupTable()
-        self.setupItems()
+    private var items: [MovieItem] = [MovieItem]()
+     
+     override func viewDidLoad() {
+         super.viewDidLoad()
+         setupTable()
+         setupItems()
+     }
+     
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "registerControl"{
+            let nextVC: RegisterViewController = segue.destination as! RegisterViewController
+            if let selecteditems = sender as? MovieItem{
+                nextVC.item = selecteditems
+            }
+        }
     }
 }
 
@@ -31,7 +38,14 @@ extension ViewController {
     }
     
     private func setupItems() {
-        items = [MovieItem(name:"a",date:"1"),MovieItem(name:"b",date:"2"),MovieItem(name:"c",date:"3"),MovieItem(name:"d",date:"4"),MovieItem(name:"e",date:"5")]
+        items = [
+            MovieItem(id: 1, name:"a", date:"1"),
+            MovieItem(id: 2, name:"b", date:"2"),
+            MovieItem(id: 3, name:"c", date:"3"),
+            MovieItem(id: 4, name:"d", date:"4"),
+            MovieItem(id: 5, name:"e", date:"5")
+        ]
+        table.reloadData()
     }
 }
 
@@ -46,15 +60,6 @@ extension ViewController: UITableViewDataSource {
         cell.setcell(item: items[indexPath.row])
         return cell
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "registerControl"{
-//            let nextVC: RegisterViewController = segue.destination as! RegisterViewController
-//            if let selecteditems = sender as? MovieItem{
-//                nextVC.item = selecteditems
-//            }
-//        }
-//    }
 }
 
 extension ViewController: UITableViewDelegate {
@@ -64,4 +69,3 @@ extension ViewController: UITableViewDelegate {
         performSegue(withIdentifier: "registerControl", sender: items[indexPath.row])
     }
 }
-

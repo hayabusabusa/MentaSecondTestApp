@@ -44,6 +44,7 @@ class RegisterViewController: UIViewController {
             return
         }
         let registeredMovie = RegisteredMovie()
+        registeredMovie.id = item.id
         registeredMovie.name = item.name
         registeredMovie.date = item.date
         let realm = try! Realm()
@@ -51,7 +52,6 @@ class RegisterViewController: UIViewController {
         try! realm.write {
             realm.add(registeredMovie)
         }
-//        ListAddedData.shared.add(item, isSelected: false)
     }
 }
 

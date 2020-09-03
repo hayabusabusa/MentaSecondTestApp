@@ -10,6 +10,8 @@ import Foundation
 import RealmSwift
 
 class RegisteredMovie: Object {
+    @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var date: String = ""
+    @objc dynamic var isWatched: Bool = false
 }
