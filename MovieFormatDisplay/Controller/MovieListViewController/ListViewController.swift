@@ -17,9 +17,9 @@ class ListViewController: UIViewController {
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            return ListAddedData.shared.allList
+            return 
         case 1:
-            return ListAddedData.shared.selectedList
+            return
         default:
             fatalError("caseでカバーできません")
         }
